@@ -69,13 +69,13 @@ function check_requirements() {
 							cout action "Running sudo apt-get update..."
 							sleep 1
 							sudo apt-get update
-						fi
 						elif [[ $answer_to_apt_get_update == *[Nn]* ]]; then
 							ask_to_apt_get_update=false
 							cout action "Skipping apt-get update"
 							sleep 1
 						else
 							cout warning "Try harder!!!"
+						fi
 					done
 					sudo apt-get install $package
 				elif [[ $answer_to_install_package == *[Nn]* ]]; then
@@ -135,6 +135,7 @@ function check_arch() {
 					sudo apt-get install ia32-libs
 				fi
 			else
+				ask_to_install_ia32libs=false
 				cout info "Good, you have ia32-libs installed!"
 			fi
 		done
