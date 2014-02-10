@@ -2,7 +2,7 @@
 
 # --------------Variable -------------- #
 
-bootclasspath="1"
+BOOTCLASSPATH=""
 requirements="openjdk-6-jre java-common zip"
 
 # FUNCTIONS ARE HERE
@@ -57,5 +57,30 @@ function check_requirements() {
 	done
 }
 
+function test_adb() {
+	cout action "Testing adb..."
+	ask_to_connect=true
+	while [[ $ask_to_connect == "true" ]]; do
+		cout info "Please connect your phone to your PC/LAPTOP. Make sure you have checked USB Debuging on Developer Options"
+		cin info "Have you? (Y/n) "
+		read answer_to_connect
+		if [[ $answer_to_connect == *[Yy]* || $answer_to_connect == "" ]]; then
+			cout action "Finding phone... If you see this more than 10 secs, please check your phone, and grant your LINUX to access adb by checking the confirmation dialog on your phone"
+			sleep 1
+			ask_to_connect=false
+		elif [[ $answer_to_connect == *[Nn]* ]]; then
+			cout info "It's OK. Take your time... I will ask this again in 5 secs..."
+			sleep 5
+		else
+			echo warning "Try harder!!!"
+		fi
+	done
+	sleep 1
+	./binary/adb kill-server
+	./binary/adb wait-for-device
+	./binary/adb devices
+}
+
 trap control_c SIGINT
 check_requirements
+test_adb
