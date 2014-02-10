@@ -51,6 +51,41 @@ function check_requirements() {
 		sleep 1
 		if [[ $(dpkg -l | grep ii | grep $package) == "" ]]; then
 			cout warning "Warning, $package has not installed yet"
+			ask_to_install_package=true
+			while [[ $ask_to_install_package == "true" ]]; do
+				cin info "Do you want to install $package? (Y/n) "
+				read answer_to_install_package
+				if [[ $answer_to_install_package == *[Yy]* || $answer_to_install_package == "" ]]; then
+					ask_to_install_package=false
+					cout action "Will installing $package. This process need root access!"
+					sleep 1
+					ask_to_apt_get_update=true
+					while [[ $ask_to_apt_get_update == "true" ]]; do
+						cin info "Do you want to run sudo apt-get update first? (Y/n) "
+						read answer_to_apt_get_update
+						if [[ $answer_to_apt_get_update == *[Yy]* || $answer_to_apt_get_update == "" ]]; then
+							ask_to_apt_get_update=false
+							cout action "Running sudo apt-get update..."
+							sleep 1
+							sudo apt-get update
+						fi
+						elif [[ $answer_to_apt_get_update == *[Nn]* ]]; then
+							ask_to_apt_get_update=false
+							cout action "Skipping apt-get update"
+							sleep 1
+						else
+							cout warning "Try harder!!!"
+					done
+					sudo apt-get install $package
+				elif [[ $answer_to_install_package == *[Nn]* ]]; then
+					ask_to_install_package=false
+					cout warning "Insufficient dependencies... Will abort now!"
+					sleep 1
+					exit 1
+				else
+					cout warning "Try harder!!!"
+				fi
+			done
 		else
 			cout info "Cool, you have $package"
 		fi
