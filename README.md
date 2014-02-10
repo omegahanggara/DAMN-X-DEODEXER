@@ -12,7 +12,7 @@ These features are under development stage, which mean you may encounter bug(s) 
 ##HOW TO USE
 If you don't have git installed on your LINUX, follow these steps:
 * Download my tools [here](https://github.com/omegahanggara/DAMN-X-DEODEXER/archive/master.zip) save it everywhere, example on your HOME directory.
-* Extract it, and there should be a new "DEODEXER" directory.
+* Extract it, and there should be a new "DAMN-X-DEODEXER" directory.
 * Open your favourite terminal.
 * Go to extracted DEODEXER directory, example if your DEODEXER directory placed on your HOME directory, type ``` cd DAMN-X-DEODEXER```.
 * To launch my tools, type ``` ./start.sh``` from your terminal.
