@@ -15,12 +15,12 @@ If you don't have git installed on your LINUX, follow these steps:
 * Extract it, and there should be a new "DEODEXER" directory.
 * Open your favourite terminal.
 * Go to extracted DEODEXER directory, example if your DEODEXER directory placed on your HOME directory, type ``` cd DAMN-X-DEODEXER```.
-* To launch my tools, type ``` ./start.sh``` (without quotes) from your terminal.
+* To launch my tools, type ``` ./start.sh``` from your terminal.
 * Happy deodexing!.
 
 If you have git installed, follow this steps:
 * Open your favourite terminal.
-* Your working directory should be on your $HOME directory, if it isn't type "cd ~" (without quotes).
+* Your working directory should be on your $HOME directory, if it isn't type ```cd ~```.
 * Clone my tools from repository using this command ``` git clone git@github.com:omegahanggara/DAMN-X-DEODEXER.git```.
 * If it's success, there should be a new "DAMN-X-DEODEXER" directory.
 * Go to "DAMN-X-DEODEXER" directory using this command ``` cd DAMN-X-DEODEXER```.
