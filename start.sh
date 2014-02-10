@@ -104,10 +104,10 @@ function check_arch() {
 		ask_to_install_ia32libs=true
 		while [[ $ask_to_install_ia32libs == "true" ]]; do
 			if [[ $(dpkg -l | grep ii | grep ia32-libs) == "" ]]; then
-				ask_to_install_ia32libs=false
 				cin warning "You don't have ia32libs installed on your system! Do you want to install it? (Y/n) "
 				read answer_to_install_ia32libs
 				if [[ $answer_to_install_ia32libs == *[Yy]* || $answer_to_install_ia32libs == ""  ]]; then
+					ask_to_install_ia32libs=false
 					cout info "Will install ia32-libs..."
 					cout action "Reading dpkg configuration..."
 					if [[ $(dpkg --print-foreign-architectures | grep i386) == "" ]]; then
@@ -132,6 +132,13 @@ function check_arch() {
 							fi
 						done
 					fi
+				elif [[ $answer_to_install_ia32libs == *[Nn]* ]]; then
+					ask_to_install_ia32libs=false
+					cout warning "Insufficient requirements! Exiting!!!"
+					sleep 1
+					exit 1
+				else
+					ask_to_install_ia32libs=false
 					sudo apt-get install ia32-libs
 				fi
 			else
