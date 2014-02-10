@@ -4,6 +4,7 @@
 
 BOOTCLASSPATH=""
 requirements="openjdk-6-jre java-common zip"
+architecture=""
 
 # FUNCTIONS ARE HERE
 
@@ -92,6 +93,57 @@ function check_requirements() {
 	done
 }
 
+function check_arch() {
+	cout action "Checking architecture..."
+	sleep 1
+	if [[ $(uname -m | grep i386) == ""  ]]; then
+		cout info "You are NOT using 32bit LINUX distro, adb might not working if you have not installed ia32libs yet."
+		sleep 1
+		cout action "Checking ia32-libs..."
+		sleep 1
+		ask_to_install_ia32libs=true
+		while [[ $ask_to_install_ia32libs == "true" ]]; do
+			if [[ $(dpkg -l | grep ii | grep ia32-libs) == "" ]]; then
+				ask_to_install_ia32libs=false
+				cin warning "You don't have ia32libs installed on your system! Do you want to install it? (Y/n) "
+				read answer_to_install_ia32libs
+				if [[ $answer_to_install_ia32libs == *[Yy]* || $answer_to_install_ia32libs == ""  ]]; then
+					cout info "Will install ia32-libs..."
+					cout action "Reading dpkg configuration..."
+					if [[ $(dpkg --print-foreign-architectures | grep i386) == "" ]]; then
+						cout warning "i386 architecture is not implemented yet!"
+						ask_to_add_i386_arch=true
+						while [[ $ask_to_add_i386_arch == "true" ]]; do
+							cin info "Do you want to add i386 architecture to your dpkg foreign architecture? (Y/n) "
+							read answer_to_add_i386_arch
+							if [[ $answer_to_add_i386_arch == *[Yy]* || $answer_to_add_i386_arch == "" ]]; then
+								ask_to_add_i386_arch=false
+								cout action "Adding i386 architecture to your dpkg foreign architecture..."
+								sleep 1
+								sudo dpkg --add-architecture i386
+								cout info "Done..."
+							elif [[ $answer_to_add_i386_arch == *[Nn]* ]]; then
+								ask_to_add_i386_arch=false
+								cout warning "Insufficient requirements! Exiting!!!"
+								sleep 1
+								exit 1
+							else
+								cout warning "Try harder!!!"
+							fi
+						done
+					fi
+					sudo apt-get install ia32-libs
+				fi
+			else
+				cout info "Good, you have ia32-libs installed!"
+			fi
+		done
+	else
+		cout info "You are running 32bit LINUX distro. This mean, you don't have to install ia32-libs to make adb work!"
+		sleep 1
+	fi
+}
+
 function test_adb() {
 	cout action "Testing adb..."
 	ask_to_connect=true
@@ -118,4 +170,5 @@ function test_adb() {
 
 trap control_c SIGINT
 check_requirements
+check_arch
 test_adb
