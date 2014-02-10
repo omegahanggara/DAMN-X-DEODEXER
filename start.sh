@@ -3,7 +3,7 @@
 # --------------Variable -------------- #
 
 BOOTCLASSPATH=""
-requirements="openjdk-6-jre java-common zip"
+requirements="java-common zip"
 architecture=""
 
 # FUNCTIONS ARE HERE
@@ -91,6 +91,14 @@ function check_requirements() {
 			cout info "Cool, you have $package"
 		fi
 	done
+	cout action "Searching any version of openjdk installed on your system..."
+	sleep 1
+	if [[ $(dpkg -l | grep ii | grep openjdk) == "" ]]; then
+		cout warning "You don't have any version of openjdk installed on your system"
+	else
+		jdk_version=$(dpkg -l | grep ii | grep openjdk | awk {'print $2'} | tr '\n' ' ')
+		cout info "You have $jdk_version installed on your system"
+	fi
 }
 
 function check_arch() {
