@@ -95,6 +95,29 @@ function check_requirements() {
 	sleep 1
 	if [[ $(dpkg -l | grep ii | grep openjdk) == "" ]]; then
 		cout warning "You don't have any version of openjdk installed on your system"
+		cout action "Searching openjdk package on your repository..."
+		sleep 1
+		if [[ $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$') == "" ]]; then
+			cout warning "No any version of openjdk found in your repository."
+			exit 1
+		else
+			cout info "Found $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$' | tr '\n' ' ')in your repository"
+			number_of_pkg=$(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$' | wc -l)
+			for pkg in $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$'); do
+				echo $pkg >> /tmp/pkg.list
+			done
+			for (( i = 1; i <= $number_of_pkg; i++ )); do
+				for pkg in $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$'); do
+					cin info "$number_of_pkg. $pkg (Type $number_of_pkg to install $pkg) "
+					read chosen_number
+					pkg_to_install=$(head -$chosen_number /tmp/pkg.list)
+					cout action "Will install $pkg_to_install"
+					sleep 1
+					sudo apt-get install $pkg_to_install
+					rm /tmp/pkg.list
+				done
+			done
+		fi
 	else
 		jdk_version=$(dpkg -l | grep ii | grep openjdk | awk {'print $2'} | tr '\n' ' ')
 		cout info "You have $jdk_version installed on your system"
