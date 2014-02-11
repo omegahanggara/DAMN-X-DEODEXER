@@ -1,7 +1,7 @@
-#DAMN-X-DEODEXER ALPHA RELEASE 1 CODENAME: RAVAGE
+###DAMN-X-DEODEXER ALPHA RELEASE 1 CODENAME: RAVAGE
 This tool ONLY works on LINUX based system. Currently working on debian based (Ubuntu, BackBox, Corel Linux, Damn Small Linux, Kali Linux, Knoppix, PureOS, Debian, CrunchBang Linux, Linux Mint Debian Edition, etc). But don't worry, I will update this tools, so it will running on ANY LINUX!
 
-##WELCOME TO DEVELOPMENT PAGE OF DAMN-X-DEODEXER TOOL
+###WELCOME TO DEVELOPMENT PAGE OF DAMN-X-DEODEXER TOOL
 This tool have some decent features, some of them are:
 * Automatically checking requirements.
 * Provide requirements binary files, just in case you don't have them, you don't have to find in on internet anymore.
@@ -9,7 +9,7 @@ This tool have some decent features, some of them are:
 
 These features are under development stage, which mean you may encounter bug(s) durring using this tool. Any new features will be added each release.
 
-##HOW TO USE
+###HOW TO USE
 If you don't have git installed on your LINUX, follow these steps:
 * Download my tools [here](https://github.com/omegahanggara/DAMN-X-DEODEXER/archive/master.zip) save it everywhere, example on your HOME directory.
 * Extract it, and there should be a new "DAMN-X-DEODEXER" directory.
@@ -27,16 +27,29 @@ If you have git installed, follow this steps:
 * To launch my tools, type ``` ./start.sh``` from your terminal.
 * Happy deodexing.
 
-##HOW TO REPORT BUG(S)
+###NOTE
+**DO NOT DELETE BASE AND BINARY DIRECTORY, OTHERWISE THIS SCRIPT WON'T WORK!!!**
+
+###HOW TO UPDATE THIS SCRIPT
+I try to update this script everyday (and maybe very hour if I have free time), any updates will be posted on my [TWITTER](https://www.twitter.com/omegahanggara)
+If you have git installed, follow these steps
+* Open your favourite terminal
+* Go to "DAMN-X-DEODEXER" directory
+* run ```git pull```
+* Done
+
+If you don't have git installed, you have to download the zip again on [here](https://github.com/omegahanggara/DAMN-X-DEODEXER)
+
+###HOW TO REPORT BUG(S)
 Before you report any bug(s), make sure you have the latest DEODEXER tool version. If the bug(s) still persist, just mail me at hanggara33@gmail.com with subject "BUG(S) on DEODEXER TOOL".
 
-##DEVELOPER(S)
+###DEVELOPER(S)
 * [omegahanggara](https://github.com/omegahanggara)
 
-##BUG HUNTER(S)
+###BUG HUNTER(S)
 Here are the users that help me to solve the problems
 
-## ABOUT ME
+### ABOUT ME
 Let's be a friend, find me on:
 * [GOOGLE +](https://www.google.com/+OmegaHanggara-red-dragon)
 * [FACEBOOK](https://www.facebook.com/omega.hanggara)
