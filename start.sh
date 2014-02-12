@@ -114,20 +114,18 @@ function check_requirements() {
 			exit 1
 		else
 			cout info "Found $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$' | tr '\n' ' ')in your repository"
-			number_of_pkg=$(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$' | wc -l)
 			for pkg in $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$'); do
 				echo $pkg >> /tmp/pkg.list
 			done
-			for (( i = 1; i <= $number_of_pkg; i++ )); do
-				for pkg in $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$'); do
-					cin info "$number_of_pkg. $pkg (Type $number_of_pkg to install $pkg) "
-					read chosen_number
-					pkg_to_install=$(head -$chosen_number /tmp/pkg.list)
-					cout action "Will install $pkg_to_install"
-					sleep 1
-					sudo apt-get install $pkg_to_install
-					rm /tmp/pkg.list
-				done
+			i=1
+			for pkg in $(apt-cache search openjdk | grep openjdk | awk '{print $1}' | grep '\-jre$'); do
+				cin info "$((i++)). $pkg (Type $((i++)) to install $pkg) "
+				read chosen_number
+				pkg_to_install=$(head -$chosen_number /tmp/pkg.list)
+				cout action "Will install $pkg_to_install"
+				sleep 1
+				sudo apt-get install $pkg_to_install
+				rm /tmp/pkg.list
 			done
 		fi
 	else
@@ -241,10 +239,18 @@ function set_bootclasspath() {
 		exit 1
 	else
 		cout action "Setting BOOTCLASSPATH parameter..."
-		BOOTCLASSPATH=$(grep BOOTCLASSPATH pulled/init.rc | awk '{print $3}')
+		export BOOTCLASSPATH=$(grep BOOTCLASSPATH pulled/init.rc | awk '{print $3}')
 		cout info "Done... Your BOOTCLASSPATH is $BOOTCLASSPATH"
 	fi
+}
 
+function find_bootclasspath_pkg() {
+	cout info "I will copy these packages from framework/ to framework_base/"
+	number_of_framework_pkg=$(echo $BOOTCLASSPATH | sed 's/\/system\///g' | tr ':' '\n' | wc -l)
+	i=1
+	for bootclasspath_pkg in $(echo $BOOTCLASSPATH | sed 's/\/system\///g' | sed 's/:/ /g'); do 
+		echo $((i++)). $bootclasspath_pkg;
+	done
 }
 
 trap control_c SIGINT
@@ -253,3 +259,4 @@ check_requirements
 check_arch
 test_adb
 set_bootclasspath
+find_bootclasspath_pkg
