@@ -8,6 +8,18 @@ architecture=""
 
 # FUNCTIONS ARE HERE
 
+function check_debian() {
+	cout action "Checking your LINUX base..."
+	sleep 1
+	if [[ -f /etc/debian_release ]]; then
+		cout info "You are using debian based version $(cat /etc/debian_release)"
+	else
+		cout warning "Sorry, this script only works for debian based. Try to use this script using another distro. Read README.md for more informations"
+		sleep 2
+		exit 1
+	fi
+}
+
 function control_c() {
 	ask_to_quit="true"
 	while [[ $ask_to_quit == "true" ]]; do
@@ -236,6 +248,7 @@ function set_bootclasspath() {
 }
 
 trap control_c SIGINT
+check_debian
 check_requirements
 check_arch
 test_adb
