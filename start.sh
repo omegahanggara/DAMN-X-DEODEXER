@@ -207,7 +207,36 @@ function test_adb() {
 	./binary/adb devices
 }
 
+function set_bootclasspath() {
+	cout action "I will pull /init.rc from your phone to get BOOTCLASSPATH..."
+	sleep 1
+	./binary/adb kill-server
+	./binary/adb pull /init.rc /pulled/init.rc
+	cout action "Checking if init.rc has successfuly pulled without any problem"
+	if [[ -f pulled/init.rc ]]; then
+		cout info "init.rc has been pulled successfuly"
+	else
+		cout warning "init.rc has not been pulled successfuly."
+		cout action "Quiting..."
+		sleep 1
+		exit 1
+	fi
+	cout action "Reading your init.rc..."
+	if [[ $(grep BOOTCLASSPATH pulled/init.rc) == "" ]]; then
+		cout warning "This init.rc provide no BOOTCLASSPATH"
+		cout action "Quiting..."
+		sleep 1
+		exit 1
+	else
+		cout action "Setting BOOTCLASSPATH parameter..."
+		BOOTCLASSPATH=$(grep BOOTCLASSPATH pulled/init.rc | awk '{print $3}')
+		cout info "Done... Your BOOTCLASSPATH is $BOOTCLASSPATH"
+	fi
+
+}
+
 trap control_c SIGINT
 check_requirements
 check_arch
 test_adb
+set_bootclasspath
