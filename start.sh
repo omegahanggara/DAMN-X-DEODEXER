@@ -11,8 +11,8 @@ architecture=""
 function check_debian() {
 	cout action "Checking your LINUX base..."
 	sleep 1
-	if [[ -f /etc/debian_release ]]; then
-		cout info "You are using debian based version $(cat /etc/debian_release)"
+	if [[ -f /etc/debian_version ]]; then
+		cout info "You are using debian based version $(cat /etc/debian_version)"
 	else
 		cout warning "Sorry, this script only works for debian based. Try to use this script using another distro. Read README.md for more informations"
 		sleep 2
@@ -223,7 +223,7 @@ function set_bootclasspath() {
 	cout action "I will pull /init.rc from your phone to get BOOTCLASSPATH..."
 	sleep 1
 	./binary/adb kill-server
-	./binary/adb pull /init.rc /pulled/init.rc
+	./binary/adb pull /init.rc pulled/init.rc
 	cout action "Checking if init.rc has successfuly pulled without any problem"
 	if [[ -f pulled/init.rc ]]; then
 		cout info "init.rc has been pulled successfuly"
