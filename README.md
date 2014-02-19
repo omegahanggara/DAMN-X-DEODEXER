@@ -29,6 +29,7 @@ If you have git installed, follow this steps:
 
 ###NOTE
 **DO NOT DELETE BASE AND BINARY DIRECTORY, OTHERWISE THIS SCRIPT WON'T WORK!!!**
+**I WILL HOLD THE PROJECT FOR A FEW DAYS SINCE I HAVE A WORK COMMINTENTS**
 
 ###HOW TO UPDATE THIS SCRIPT
 I try to update this script everyday (and maybe very hour if I have free time), any updates will be posted on my [TWITTER](https://www.twitter.com/omegahanggara)
